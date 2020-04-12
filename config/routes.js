@@ -13,6 +13,6 @@ module.exports.routes = {
     'GET /devices'                                                  : 'DeviceController.getAllDevices',
     'POST /device'                                                  : 'DeviceController.addDevice',
     'POST /performAction'                                           : 'DeviceController.performOperationOnDevice',
-    'DELETE /device'                                                : 'DeviceController.removeDevice' 
+    'DELETE /device/:fingerprint'                                   : 'DeviceController.removeDevice' 
 
 };
