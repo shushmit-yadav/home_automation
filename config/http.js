@@ -41,7 +41,7 @@ module.exports.http = {
     ],
 
     myRequestLogger: function (req, res, next) {
-      sails.log.info('Requested :: ', req.method, req.url, ((req._parsedUrl.pathname !=='/login' && req.method !== 'GET' && req.method !=='OPTIONS') ?JSON.stringify(req.body || ""):""));
+      sails.log.info('Requested :: ', req.method, req.url, ((req.method !== 'GET' && req.method !=='OPTIONS') ?JSON.stringify(req.body || ""):""));
       return next();
     },
 
