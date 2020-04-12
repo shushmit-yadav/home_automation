@@ -33,6 +33,7 @@ module.exports.http = {
       'cookieParser',
       'session',
       'bodyParser',
+      'myRequestLogger',
       'compress',
       'poweredBy',
       'router',
