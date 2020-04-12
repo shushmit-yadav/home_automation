@@ -138,5 +138,30 @@ module.exports = {
         }
     },
 
+
+    /**
+     * @author: shushmit yadav
+     * @description: this function will accept fingerprint, and it will destroy matched record 
+     * @param {*} req 
+     * @param {*} res 
+     */
+    removeDevice: function(req, res){
+        var requiredParamsError = BaseCtrl.checkRequiredParams(req, ['fingerprint']);
+        if(requiredParamsError){
+            return res.badRequest(requiredParamsError);
+        } else {
+
+            sails.models.device.destroy({'fingerprint': req.param('fingerprint')})
+            .then(function(deletedDevice){
+                return res.ok({"CODE": "SUCCESS", "message": "Device has been removed successfully."});
+            })
+            .catch(function(err){
+                var errCode = err && err.code ? err.code : 500,
+                    errMessage = err && err.message ? err.mesage : err;
+                return res.status(errCode).send(errMessage);
+            });
+        }
+    }
+
 };
 
