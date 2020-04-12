@@ -8,27 +8,27 @@
 
 module.exports = _.merge(_.cloneDeep(require('../base/Model')), {
 
-	tableName: 'device',
-	fetchRecordsOnCreate: true,
+    tableName: 'device',
+    fetchRecordsOnCreate: true,
     fetchRecordsOnUpdate: true,
-	  
-	attributes: {
 
-		fingerprint: {
-			type: 'string',
-			required: true,
-			unique: true
-		},
+    attributes: {
+
+        fingerprint: {
+            type: 'string',
+            required: true,
+            unique: true
+        },
         name: {
             type: 'string',
             required: true
         },
         actions: {
-			type: 'json'
-		}
-    
+            type: 'json'
+        }
 
-  	},
+
+      },
 
 });
 

@@ -10,5 +10,6 @@
 
 module.exports.routes = {
 
+    'GET /devices'                                                  : 'DeviceController.getAllDevices'
 
 };
