@@ -69,20 +69,11 @@ module.exports.models = {
   ***************************************************************************/
 
   attributes: {
-    createdAt: { type: 'string', autoCreatedAt: true, columnType: 'datetime' },
-    updatedAt: { type: 'string', autoUpdatedAt: true, columnType: 'datetime' },
-    id: { type: 'string', columnName: '_id', autoIncrement: false },
-    //--------------------------------------------------------------------------
-    //  /\   Using MongoDB?
-    //  ||   Replace `id` above with this instead:
-    //
-    // ```
-    // id: { type: 'string', columnName: '_id' },
-    // ```
-    //
-    // Plus, don't forget to configure MongoDB as your default datastore:
-    // https://sailsjs.com/docs/tutorials/using-mongo-db
-    //--------------------------------------------------------------------------
+
+      createdAt: { type: 'string', autoCreatedAt: true, columnType: 'datetime' },
+      updatedAt: { type: 'string', autoUpdatedAt: true, columnType: 'datetime' },
+      id: { type: 'string', columnName: '_id', autoIncrement: false }
+
   },
 
 
@@ -101,7 +92,7 @@ module.exports.models = {
   ******************************************************************************/
 
   dataEncryptionKeys: {
-    default: 'WvhI3eYGqTBf5zLU5GJ4i/3aHvXgmFCoSHw2lEJnriw='
+      default: 'WvhI3eYGqTBf5zLU5GJ4i/3aHvXgmFCoSHw2lEJnriw='
   },
 
 
