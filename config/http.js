@@ -29,17 +29,21 @@ module.exports.http = {
     *                                                                          *
     ***************************************************************************/
 
-    // order: [
-    //   'cookieParser',
-    //   'session',
-    //   'bodyParser',
-    //   'compress',
-    //   'poweredBy',
-    //   'router',
-    //   'www',
-    //   'favicon',
-    // ],
+    order: [
+      'cookieParser',
+      'session',
+      'bodyParser',
+      'compress',
+      'poweredBy',
+      'router',
+      'www',
+      'favicon',
+    ],
 
+    myRequestLogger: function (req, res, next) {
+      sails.log.info('Requested :: ', req.method, req.url, ((req._parsedUrl.pathname !=='/login' && req.method !== 'GET' && req.method !=='OPTIONS') ?JSON.stringify(req.body || ""):""));
+      return next();
+    },
 
     /***************************************************************************
     *                                                                          *
@@ -49,11 +53,11 @@ module.exports.http = {
     *                                                                          *
     ***************************************************************************/
 
-    // bodyParser: (function _configureBodyParser(){
-    //   var skipper = require('skipper');
-    //   var middlewareFn = skipper({ strict: true });
-    //   return middlewareFn;
-    // })(),
+    bodyParser: (function _configureBodyParser(){
+        var skipper = require('skipper');
+      	var middlewareFn = skipper({ strict: true });
+        return middlewareFn;
+    })(),
 
   },
 
