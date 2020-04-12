@@ -11,6 +11,7 @@
 module.exports.routes = {
 
     'GET /devices'                                                  : 'DeviceController.getAllDevices',
-    'POST /device'                                                  : 'DeviceController.addDevice'
+    'POST /device'                                                  : 'DeviceController.addDevice',
+    'POST /performAction'                                           : 'DeviceController.performOperationOnDevice'
 
 };

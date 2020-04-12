@@ -88,5 +88,55 @@ module.exports = {
         }
     },
 
+    /**
+     * @author: shushmit yadav
+     * @description: this function will send device's fingerprint and action which has to be perform...
+     *              It will first find device and then check that if action is to be perform first time, then it will store that action with value true in actions attribute
+     *              It that action has been performed already, then function will toggle that action value only
+     * @param {*} req 
+     * @param {*} res 
+     */
+    performOperationOnDevice: function(req, res){
+        var requiredParamsError = BaseCtrl.checkRequiredParams(req, ['fingerprint', 'action']);
+        if(requiredParamsError){
+            return res.badRequest(requiredParamsError);
+        } else {
+            
+            var action = req.param('action'),
+                fingerprint = req.param('fingerprint');
+            // first find device
+            sails.models.device.findOne({'fingerprint': fingerprint})
+            .then(function(device){
+                if(!device){
+                    var err = new Error();
+                    err.code = 404;
+                    err.mesage = "Device not found with fingerprint - " + fingerprint;
+                    throw err;
+                } else {
+                    // get already performed action
+                    var actionObj = device.actions ? device.actions : {};
+                    actionObj[action] = actionObj[action] ? !actionObj[action] : true;
+
+                    // update action
+                    return sails.models.device.update({'id': device.id}, {'actions': actionObj})
+                    .then(function(actionPerformed){
+                        return actionPerformed;
+                    })
+                    .catch(function(err){
+                        throw err;
+                    });
+                }
+            })
+            .then(function(actionPerformed){
+                return res.ok(actionPerformed);
+            })
+            .catch(function(err){
+                var errCode = err && err.code ? err.code : 500,
+                    errMessage = err && err.message ? err.message : err;
+                return res.status(errCode).send(errMessage);
+            });
+        }
+    },
+
 };
 
