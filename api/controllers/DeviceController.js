@@ -35,7 +35,58 @@ module.exports = {
             });
 
         }
-    }
+    },
+
+     /**
+     * @author: shushmit yadav
+     * @description: this function will first check required parameters, then it will first check that fingerprint which has to be add, already installed or not
+     *               If already installed, then throw error already exists, otherwise will will add new device
+     * @param {*} req 
+     * @param {*} res 
+     */
+    addDevice: function(req, res){
+        var requiredParamsError = BaseCtrl.checkRequiredParams(req, ['fingerprint', 'name']);
+        if(requiredParamsError){
+            return res.badRequest(requiredParamsError);
+        } else {
+            var reqObj = {
+                'name': req.param('name'),
+                'fingerprint': req.param('fingerprint')
+            };
+
+            // first find then create
+            sails.models.device.findOne({'fingerprint': reqObj.fingerprint})
+            .then(function(deviceFound){
+                if(deviceFound){
+                    var err = new Error();
+                    err.code = 403;
+                    err.mesage = "Device found with fingerprint - " + reqObj.fingerprint;
+
+                    throw err;
+                } else {
+                    return deviceFound;
+                }
+            })
+            .then(function(device){
+                // create new device
+                return sails.models.device.create(reqObj)
+                .then(function(deviceAdded){
+                    return deviceAdded;
+                })
+                .catch(function(err){
+                    throw err;
+                });
+            })
+            .then(function(device){
+                return device;
+            })
+            .catch(function(err){
+                var errCode = err && err.code ? err.code : 500,
+                    errMessage = err && err.message ? err.message : err;
+                return res.status(errCode).send(errMessage);
+            });
+        }
+    },
 
 };
 
