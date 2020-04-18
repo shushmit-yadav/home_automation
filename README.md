@@ -23,3 +23,9 @@ npm install will install all the libraries from package.json file
         + fingerprint
         + action
 + DELETE /device/:fingerprint
+
+## Test Cases
+For testcases, I have used libraries chai, mocha and supertest. [Documentation for testcases with sails](https://sailsjs.com/documentation/concepts/testing).
+
+Open terminal in project root directory and then run command
++ npm test
