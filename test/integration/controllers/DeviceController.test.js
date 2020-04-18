@@ -48,6 +48,20 @@ describe('DeviceController', function() {
                 done();
             });
         });
+
+        it("should throw error bad request", function(done){
+            supertest(sails.hooks.http.app)
+            .post('/device')
+            .set('Content-Type', 'application/json')
+            .send({
+                "name": "Samsung TV"
+            })
+            .expect(400)
+            .end(function(err, res){
+                if (err) return done(err);
+                done();
+            });
+        });
     });
 
 
@@ -61,6 +75,36 @@ describe('DeviceController', function() {
                 "action": "start" 
             })
             .expect(200)
+            .end(function(err, res){
+                if (err) return done(err);
+                done();
+            });
+        });
+
+
+        it("should throw error bad request", function(done){
+            supertest(sails.hooks.http.app)
+            .post('/performAction')
+            .set('Content-Type', 'application/json')
+            .send({
+                "action": "start" 
+            })
+            .expect(400)
+            .end(function(err, res){
+                if (err) return done(err);
+                done();
+            });
+        });
+
+        it("should return device not found", function(done){
+            supertest(sails.hooks.http.app)
+            .post('/performAction')
+            .set('Content-Type', 'application/json')
+            .send({
+                "fingerprint": "abdsfjsd3q4q4q3ndkjdf4", 
+                "action": "start" 
+            })
+            .expect(404)
             .end(function(err, res){
                 if (err) return done(err);
                 done();
@@ -79,23 +123,6 @@ describe('DeviceController', function() {
                 done();
             });
         });
-    });
-
-    describe("#performOperationOnDevice()", function(){
-        it("should return device on which action has been performed", function(done){
-            supertest(sails.hooks.http.app)
-            .post('/performAction')
-            .set('Content-Type', 'application/json')
-            .send({
-                "fingerprint": "abdsfjsd3q4q4q34", 
-                "action": "start" 
-            })
-            .expect(404)
-            .end(function(err, res){
-                if (err) return done(err);
-                done();
-            });
-        })
     });
 
 });
