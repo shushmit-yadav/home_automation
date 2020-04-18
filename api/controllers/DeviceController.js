@@ -59,7 +59,7 @@ module.exports = {
             .then(function(deviceFound){
                 if(deviceFound){
                     var err = new Error();
-                    err.code = 403;
+                    err.code = 409;
                     err.mesage = "Device found with fingerprint - " + reqObj.fingerprint;
 
                     throw err;
@@ -78,9 +78,10 @@ module.exports = {
                 });
             })
             .then(function(device){
-                return device;
+                return res.ok(device);
             })
             .catch(function(err){
+                // console.log('err------------------------> ', err);
                 var errCode = err && err.code ? err.code : 500,
                     errMessage = err && err.message ? err.message : err;
                 return res.status(errCode).send(errMessage);
